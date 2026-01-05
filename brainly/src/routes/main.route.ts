@@ -5,6 +5,9 @@ import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import { authMiddleware } from "../middleware/middleware";
 import { ContentModel } from "../models/content.model";
+import { tr } from "zod/v4/locales";
+import { random } from "../utils/utils";
+import { LinksModel } from "../models/links.model";
 
 export const router = Router();
 
@@ -168,16 +171,62 @@ router.delete("/content",authMiddleware,  async (req, res) => {
   }
 });
 
-router.post("/brain/share", async (req, res) => {
-  // TODO: Implement brain share logic
+router.post("/brain/share", authMiddleware, async (req, res) => {
+  try {
+    const share = req.body.share;
+    if (share) {
+      //@ts-ignore
+      const existingLink = await LinksModel.findOne({ userId: req.user._id });
 
+      if (existingLink) {
+        res.status(409).json({ hash: existingLink.hash });
+      } else {
+        const shareHash = random(10);
+        await LinksModel.create({
+          hash: shareHash,
+          // @ts-ignore
+          userId: req.user._id,
+        });
 
+        res.status(200).json({ share: shareHash });
+      }
+    } else {
+      await LinksModel.deleteOne({
+        // @ts-ignore
+        userId: req.user._id,
+      });
 
+      res.status(200).json({ message: "Share link deleted" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 router.get("/brain/:sharelink", async (req, res) => {
-  // TODO: Implement brain share link retrieval logic
-  res.status(501).json({ error: "Not implemented yet" });
+  try {
+    const shareLink = req.params.sharelink;
+
+    const links = await LinksModel.findOne({ hash: shareLink });
+
+    if (!links) {
+      res.status(404).json({ error: "Share link not found" });
+    }
+
+    const content = await ContentModel.find({ userId: links.userId })
+
+    const user = await UserModel.findOne({
+      _id : links.userId,
+    });
+
+    if (!user) {
+      res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ username: user.username, content: content });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 // req and res in ts manner
