@@ -170,7 +170,9 @@ router.delete("/content",authMiddleware,  async (req, res) => {
 
 router.post("/brain/share", async (req, res) => {
   // TODO: Implement brain share logic
-  res.status(501).json({ error: "Not implemented yet" });
+
+
+
 });
 
 router.get("/brain/:sharelink", async (req, res) => {
