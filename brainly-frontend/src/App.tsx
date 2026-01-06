@@ -1,31 +1,47 @@
-import './App.css'
-import Button from './components/Button'
-import Card from './components/Card'
-import PlusIcon from './icons/PlusIcon'
-import ShareIcon from './icons/ShareIcon'
+import "./App.css";
+import Button from "./components/Button";
+import Card from "./components/Card";
+import PlusIcon from "./icons/PlusIcon";
+import ShareIcon from "./icons/ShareIcon";
 
 function App() {
-
   return (
-    <>
+    <div className="p-4">
+      <div className="flex justify-end gap-5 ">
+        <Button
+          size="md"
+          varient="primary"
+          text="Add Content"
+          startIcon={<PlusIcon size="md" />}
+        />
 
-      <Button 
-      size='md'
-      varient='primary'
-      text='hello world'
-      startIcon={<ShareIcon size='md' /> }
-      />
+        <Button
+          size="md"
+          varient="secondary"
+          text="Share Brain"
+          startIcon={<ShareIcon size="md" />}
+        />
+      </div>
+      <div className="flex gap-5">
+        <Card
+          title="Test Title"
+          link="https://www.youtube.com/watch?v=3XQOY0nx6yw"
+          type="youtube"
+        />
 
-
-      <Button 
-      size='md'
-      varient='secondary'
-      text='hello world'
-      startIcon={<PlusIcon size='md' /> }
-      />
-      <Card/> 
-    </>
-  )
+        <Card
+          title="twitter"
+          link="https://x.com/Praneeth1757/status/2008196437717520668?s=20"
+          type="twitter"
+        />
+        <Card
+          title="Test Twitter"
+          link="https://x.com/kirat_tw/status/2008256057471336574?s=20"
+          type="twitter"
+        />
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
