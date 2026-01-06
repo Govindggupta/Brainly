@@ -1,18 +1,25 @@
+import { useState } from "react";
 import "./App.css";
 import Button from "./components/Button";
 import Card from "./components/Card";
+import CreateContentModel from "./components/CreateContentModel";
 import PlusIcon from "./icons/PlusIcon";
 import ShareIcon from "./icons/ShareIcon";
 
 function App() {
+  const [contentModelOpen , setContentModelOpen] = useState<boolean>(false);
+
+
   return (
     <div className="p-4">
+      <CreateContentModel open={contentModelOpen} onClose={() => {setContentModelOpen(false)}} />
       <div className="flex justify-end gap-5 ">
         <Button
           size="md"
           varient="primary"
           text="Add Content"
           startIcon={<PlusIcon size="md" />}
+          onclick={() => {setContentModelOpen(true)}}
         />
 
         <Button
