@@ -5,8 +5,11 @@ import CreateContentModel from "../components/CreateContentModel";
 import PlusIcon from "../icons/PlusIcon";
 import ShareIcon from "../icons/ShareIcon";
 import SideBar from "../components/SideBar";
+import useContent from "../hooks/useContent";
 
 function Dashboard() {
+
+  const Content = useContent();
   const [contentModelOpen, setContentModelOpen] = useState<boolean>(false);
 
   return (
@@ -37,23 +40,8 @@ function Dashboard() {
             startIcon={<ShareIcon size="md" />}
           />
         </div>
-        <div className="flex gap-5">
-          <Card
-            title="Test Title"
-            link="https://www.youtube.com/watch?v=3XQOY0nx6yw"
-            type="youtube"
-          />
-
-          <Card
-            title="twitter"
-            link="https://x.com/Praneeth1757/status/2008196437717520668?s=20"
-            type="twitter"
-          />
-          <Card
-            title="Test Twitter"
-            link="https://x.com/kirat_tw/status/2008256057471336574?s=20"
-            type="twitter"
-          />
+        <div className="grid grid-cols-5 gap-5">
+          {Content.map(({title , link , type}) => <Card title={title} link={link} type={type} />)}
         </div>
       </div>
     </div>

@@ -10,9 +10,7 @@ interface CardProps {
 const Card = ({ title, link, type }: CardProps) => {
   return (
     <>
-      <div className="p-4 bg-white rounded-md border-gray-200 max-w-72 border \
-     h-full
-      ">
+      <div className="p-4 bg-white rounded-md border-gray-200 max-w-72 border h-fit">
         <div className="justify-between flex text-md items-center ">
           <div className="flex gap-2">
             <ShareIcon size="md" />
