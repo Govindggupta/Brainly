@@ -116,7 +116,7 @@ router.post("/content", authMiddleware, async (req: Request, res: Response) => {
     const contentSchema = z.object({
       link: z.string(),
       title: z.string(),
-      type: z.enum(["image", "video", "article", "audio"]),
+      type: z.enum(["image", "video", "article", "audio", "twitter", "youtube"]),
     });
 
     const contentData = contentSchema.parse(req.body);
