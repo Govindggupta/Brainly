@@ -7,6 +7,7 @@ export interface ButtonInterface {
   startIcon?: ReactElement;
   endIcon?: ReactElement;
   onclick?: () => void;
+  loading? : boolean;
 }
 
 const ButtonSizeVariants = {
@@ -34,9 +35,7 @@ const ButtonVarients = {
 const Button = (props: ButtonInterface) => {
   return (
     <button
-      className={`${ButtonVarients[props.varient]} ${
-        ButtonSizeVariants[props.size]
-      } flex justify-center items-center gap-2`}
+      className={`${ButtonVarients[props.varient]} ${ButtonSizeVariants[props.size]} ${props.loading ? " opacity-40 cursor-progress " : " "} flex justify-center items-center gap-2`}
       onClick={props.onclick}
     >
       {props.startIcon }

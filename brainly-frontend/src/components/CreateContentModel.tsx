@@ -2,6 +2,7 @@ import { useRef, useState, type ReactElement } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 import CrossIcon from "../icons/CrossIcon";
 import Button from "./Button";
+import { Input } from "./Input";
 
 const CreateContentModel = ({ open, onClose } : {open : boolean , onClose : () => void}) => {
   const contentModel = useRef<HTMLDivElement | null>(null);
@@ -38,23 +39,5 @@ const CreateContentModel = ({ open, onClose } : {open : boolean , onClose : () =
   );
 };
 
-const Input = ({
-  placeholder,
-  onchange,
-}: {
-  placeholder: string;
-  onchange: () => void;
-}) => {
-  return (
-    <div>
-      <input
-        type={"text"}
-        placeholder={placeholder}
-        className="px-4 py-2 border rounded m-2"
-        onChange={onchange}
-      />
-    </div>
-  );
-};
 
 export default CreateContentModel;
