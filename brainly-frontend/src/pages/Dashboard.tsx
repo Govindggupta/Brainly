@@ -22,7 +22,7 @@ function Dashboard() {
             setContentModelOpen(false);
           }}
         />
-        <div className="flex justify-end gap-5 ">
+        <div className="flex justify-end gap-5 pb-4 ">
           <Button
             size="md"
             varient="primary"
@@ -41,7 +41,7 @@ function Dashboard() {
           />
         </div>
         <div className="grid grid-cols-5 gap-5">
-          {Content.map(({title , link , type}) => <Card title={title} link={link} type={type} />)}
+          {Content.map(({title , link , type , _id}) => <Card title={title} link={link} type={type} id={_id}/>)}
         </div>
       </div>
     </div>

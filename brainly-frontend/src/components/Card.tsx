@@ -1,13 +1,33 @@
-import PlusIcon from "../icons/PlusIcon";
+import axios from "axios";
+import Dustbin from "../icons/Dustbin";
 import ShareIcon from "../icons/ShareIcon";
 
 interface CardProps {
+  id : string;
   title: string;
   link: string;
   type: "twitter" | "youtube";
 }
 
-const Card = ({ title, link, type }: CardProps) => {
+
+const Card = ({ id , title, link, type }: CardProps) => {
+
+  const handleDelete = async (id: string) => {
+
+    const response = await axios.delete("http://localhost:3000/api/v1/content", {
+      headers: {
+        "authorization" : localStorage.getItem("token")
+      },
+      data: {
+        contentId: id
+      }
+    })
+
+    if (response.status === 200) {
+      console.log("Content deleted successfully");
+    }
+  }
+
   return (
     <>
       <div className="p-4 bg-white rounded-md border-gray-200 max-w-72 border h-fit">
@@ -17,7 +37,9 @@ const Card = ({ title, link, type }: CardProps) => {
             <div className="font-bold">{title}</div>
           </div>
           <div className="flex gap-2">
-            <PlusIcon size="md" />
+            <div onClick={() => {id && handleDelete(id)}}  className="cursor-pointer">
+              <Dustbin />
+            </div>
             <a href={link} target="_blank" rel="noreferrer">
               <ShareIcon size="md" />
             </a>
