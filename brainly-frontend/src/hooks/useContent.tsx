@@ -4,16 +4,24 @@ import { useEffect, useState } from "react"
 const useContent = () => {
     const [contents , setContents] = useState([])
 
-    useEffect(() => { 
-        axios.get("http://localhost:3000/api/v1/content", {
-            headers: {
-                "Authorization" : localStorage.getItem("token")
-            }
-        }).then((response) => {
+    const fetchContents = async () => {
+        try {
+            const response = await axios.get("http://localhost:3000/api/v1/content", {
+                headers: {
+                    "Authorization" : localStorage.getItem("token")
+                }
+            })
             setContents(response.data.contents);
-        })
+        } catch (error) {
+            console.error("Error fetching contents:", error);
+        }
+    }
+
+    useEffect(() => { 
+        fetchContents();
     }, [])
-  return contents
+    
+    return { contents, refetch: fetchContents }
 }
 
 export default useContent

@@ -14,9 +14,11 @@ enum ContentType {
 const CreateContentModel = ({
   open,
   onClose,
+  onSuccess,
 }: {
   open: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
 }) => {
   const contentModel = useRef<HTMLDivElement | null>(null);
   const linkRef = useRef<HTMLInputElement>(null);
@@ -50,6 +52,7 @@ const CreateContentModel = ({
 
     if (response.status === 200) {
       onClose();
+      onSuccess?.();
     }
   };
   return (

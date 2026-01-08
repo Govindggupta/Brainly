@@ -7,10 +7,11 @@ interface CardProps {
   title: string;
   link: string;
   type: "twitter" | "youtube";
+  onDelete?: () => void;
 }
 
 
-const Card = ({ id , title, link, type }: CardProps) => {
+const Card = ({ id , title, link, type, onDelete }: CardProps) => {
 
   const handleDelete = async (id: string) => {
 
@@ -24,7 +25,7 @@ const Card = ({ id , title, link, type }: CardProps) => {
     })
 
     if (response.status === 200) {
-      console.log("Content deleted successfully");
+      onDelete?.();
     }
   }
 

@@ -9,7 +9,7 @@ import useContent from "../hooks/useContent";
 
 function Dashboard() {
 
-  const Content = useContent();
+  const { contents, refetch } = useContent();
   const [contentModelOpen, setContentModelOpen] = useState<boolean>(false);
 
   return (
@@ -21,6 +21,7 @@ function Dashboard() {
           onClose={() => {
             setContentModelOpen(false);
           }}
+          onSuccess={refetch}
         />
         <div className="flex justify-end gap-5 pb-4 ">
           <Button
@@ -41,7 +42,7 @@ function Dashboard() {
           />
         </div>
         <div className="grid grid-cols-5 gap-5">
-          {Content.map(({title , link , type , _id}) => <Card title={title} link={link} type={type} id={_id}/>)}
+          {contents.map(({title , link , type , _id}) => <Card key={_id} title={title} link={link} type={type} id={_id} onDelete={refetch}/>)}
         </div>
       </div>
     </div>
