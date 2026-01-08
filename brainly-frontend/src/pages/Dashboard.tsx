@@ -6,11 +6,39 @@ import PlusIcon from "../icons/PlusIcon";
 import ShareIcon from "../icons/ShareIcon";
 import SideBar from "../components/SideBar";
 import useContent from "../hooks/useContent";
+import axios from "axios";
 
 function Dashboard() {
 
   const { contents, refetch } = useContent();
   const [contentModelOpen, setContentModelOpen] = useState<boolean>(false);
+
+  const ShareBrain = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/brain/share",
+        { share: true },
+        {
+          headers: {
+            "Authorization": localStorage.getItem("token")
+          }
+        }
+      )
+
+      if (response.status === 200) {
+        alert(response.data.hash);
+        refetch();
+      }
+      if (response.status === 409) {
+        alert(response.data.hash);
+        refetch();
+      }
+
+    } catch (error) {
+      console.error("Error sharing brain:", error);
+      alert("Failed to share brain. Please try again.");
+    }
+  }
 
   return (
     <div >
@@ -39,6 +67,7 @@ function Dashboard() {
             varient="secondary"
             text="Share Brain"
             startIcon={<ShareIcon size="md" />}
+            onclick={ShareBrain}
           />
         </div>
         <div className="grid grid-cols-5 gap-5">

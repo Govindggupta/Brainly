@@ -17,7 +17,7 @@ const Card = ({ id , title, link, type, onDelete }: CardProps) => {
 
     const response = await axios.delete("http://localhost:3000/api/v1/content", {
       headers: {
-        "authorization" : localStorage.getItem("token")
+        "Authorization" : localStorage.getItem("token")
       },
       data: {
         contentId: id
